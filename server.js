@@ -271,6 +271,25 @@ app.get("/", (req, res) => {
     .tag { font-size: 11px; padding:2px 8px; border-radius: 999px; background:#23233a; color:#cdd3ea; border:1px solid #2d2d47; }
     .fab { position: fixed; right: 16px; bottom: 16px; z-index: 1000; background: var(--accent); color:#111; border:0; border-radius: 999px; padding:12px 16px; font-weight:600; cursor:pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
     a { color: #d2ddff; }
+    .leaflet-popup-content-wrapper {
+      background: rgba(22, 22, 34, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .leaflet-popup-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .leaflet-popup-content a {
+      color: var(--accent);
+    }
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+      background: rgba(22, 22, 34, 0.85);
+    }
   </style>
 </head>
 <body>
@@ -450,10 +469,10 @@ app.get("/", (req, res) => {
   }
 
   var today = new Date();
-  var lastYear = new Date(today);
-  lastYear.setFullYear(today.getFullYear() - 1);
+  var oneMonthAgo = new Date(today);
+  oneMonthAgo.setMonth(today.getMonth() - 1);
   function toInputDate(d){ return d.toISOString().slice(0,10); }
-  from.value = toInputDate(lastYear);
+  from.value = toInputDate(oneMonthAgo);
   to.value = toInputDate(today);
 
   function toEpochSecondsLocalStart(dStr){
@@ -529,7 +548,7 @@ app.get("/", (req, res) => {
         var coords = decodePolyline(a.polyline);
         if (!coords.length) return;
         var line = L.polyline(coords, { weight: 3, opacity: 0.9, color: '#FC5201' });
-        line.bindPopup('<strong>' + a.name + '</strong><br>' + new Date(a.start_date).toLocaleString() + '<br><span class="tag">' + (a.sport_type || '') + '</span>' + '<br><a href="https://www.strava.com/activities/' + a.id + '" target="_blank" rel="noopener noreferrer">Auf Strava öffnen</a>');
+        line.bindPopup('<span style="color:#fff;margin-bottom:4px">' + a.name + '</span><span class="muted" style="margin-bottom:12px">' + new Date(a.start_date).toLocaleString() + '</span><span class="tag" style="margin-bottom:6px">' + (a.sport_type || '') + '</span>' + '<a href="https://www.strava.com/activities/' + a.id + '" target="_blank" rel="noopener noreferrer">Auf Strava öffnen</a>');
         routesLayer.addLayer(line);
         coords.forEach(function(c){ bounds.push(c); });
       });
