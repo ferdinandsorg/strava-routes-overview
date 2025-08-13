@@ -1,5 +1,5 @@
 /**
- * Strava Routen-Map – Ein-Datei-App (Node + Leaflet)
+ * Strava Routen-Map
  * ---------------------------------------------------
  * Minimalistische Full‑Stack-Webseite: Login via Strava, Zeitraum wählen,
  * Routen (summary_polyline) als Polylines auf der Karte anzeigen.
@@ -206,6 +206,7 @@ app.get("/", (req, res) => {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="/favicon.png">
   <title>Strava Routen</title>
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="stylesheet" href="https://unpkg.com/modern-normalize/modern-normalize.css" />
@@ -226,7 +227,7 @@ app.get("/", (req, res) => {
       border-radius: 14px;
       padding: 14px;
       position: fixed;
-      top: 32px;
+      top: 16px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1000;
@@ -289,6 +290,12 @@ app.get("/", (req, res) => {
     }
     .leaflet-popup-content-wrapper, .leaflet-popup-tip {
       background: rgba(22, 22, 34, 0.85);
+    }
+    .leaflet-left .leaflet-control {
+      margin-left: 16px !important;
+    }
+    .leaflet-top .leaflet-control {
+      margin-top: 16px !important;
     }
   </style>
 </head>
